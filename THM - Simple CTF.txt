@@ -1,0 +1,19 @@
+Simple CTF
+
+On running "namp -sV -sC -p0-65535 <ip>", we see that there is an ftp service running with anonymous login enabled.
+On logging in to ftp and seeing the directories, there are two directories - ftp and pub.
+we cant get into the ftp directory but we can access the pub directory and we get a file called FortMitch.txt.
+On reading the contents of the file, we come to know of a user called Mitch, which we can use later.
+From the Nmap scan we can also see that there is an SSH service running on port 2222.
+We'll try to bruteforce the password for user Mitch for SSH using Hydra.
+"hydra -l mitch -P /path/to/rockyou.txt ssh://<ip> -p 2222"
+We get a successful crack with the password as "secret".
+Logging in to SSH using the username and password, we get our first flag - user.txt.
+Now time for Privilege Escalation.
+On running the command "sudo -l", we observe that we can run the program "vim" without entering the sudo password.
+Head over to GTFObins and get the sudo command for vim.
+"sudo vim -c ':!/bin/sh'".
+We now have root access. Nice!
+Heading to the root directory, we get our final flag - root.txt.
+
+Room completed.
